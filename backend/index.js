@@ -1,13 +1,24 @@
 const express = require('express');
 const cors = require('cors')
-require('dotenv').config();
 const app = express();
-const port = process.env.port;
 const {db} = require('./db/db');
+const {readdirSync} = require('fs');
+require('dotenv').config();
+const port = process.env.port;
 
 //middlewares
 app.use(express.json());
 app.use(cors());
+
+// routes
+readdirSync('./routes').map((route) => {
+    try{
+        app.use('/api/v1', require('./routes/' + route));
+    } catch(error){
+        console.log(`Error loading route : ${route}`, error);
+    }
+});
+
 
 // app.get('/', (req,res)=>{
 //     res.send("welcome");
