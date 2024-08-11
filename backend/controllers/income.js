@@ -1,4 +1,4 @@
-const IncomeSchema = require('../models/income.model');
+const IncomeSchema = require('../models/incomeModel');
 
 exports.addIncome = async (req,res) =>{
     const {title, amount, category, description, date} = req.body;
@@ -21,12 +21,13 @@ exports.addIncome = async (req,res) =>{
 
         await income.save();
         res.status(200).json({message: 'Income Added'});
+        console.log(income);
 
     }
     catch (error){
         res.status(500).json({message: 'Server Error'});
     }
-    console.log(income);
+    
 }
 
 exports.getIncomes = async (req, res) =>{
